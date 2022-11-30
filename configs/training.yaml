@@ -1,0 +1,45 @@
+training:
+  # Experiment id to use in logging and checkpoints
+  experiment_id: null
+  # Maximum number of epochs
+  epochs: 100
+  # Device on which the model will be trained. Set 'cpu' to train/infer on CPU
+  device: cuda
+
+  dataloader:
+    batch_size: 256
+    num_workers: 4
+    shuffle: True
+    pin_memory: True
+  
+  optimizer:
+    name: AdamW
+    args:
+      lr: 5e-5
+      eps: 1e-6
+      betas: [0.9, 0.98]
+      weight_decay: 0.2
+  
+  # Whether to use mixed precision training instead of full precision (FP32)
+  amp: true
+  # Early stopping configs
+  early_stop:
+    # Whether to use early stopping, (Default: false)
+    enabled: false
+    # Patience for early stoppings
+    patience: 4000
+    # Criteria to be monitored for early stopping
+    criteria: loss
+    # Whether the monitored criteria should be minimized for early stopping
+    minimize: true
+    
+# Environment configuration
+env:
+  # Base directory of the repo, populated when config is loaded
+  base_dir: null
+  # Directory for storing datasets and models
+  data_root: ${env.base_dir}/data
+  # Directory for experiments, logs, output samples etc.
+  save_dir: ${env.base_dir}/save
+  # Directory for saving models, logs and checkpoints for each experiment
+  experiments_dir: ${env.save_dir}/experiments

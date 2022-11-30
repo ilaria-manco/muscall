@@ -1,0 +1,7 @@
+.idea/*
+*.egg-info/
+**/__pycache__/
+.vector_cache/
+.ipynb_checkpoints/
+save/
+**venv

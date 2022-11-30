@@ -1,0 +1,7 @@
+torch==1.11.0
+omegaconf==2.0.0
+librosa==0.8.0
+torchaudio==0.11.0
+einops==0.6.0
+simclr==1.0.2
+torch-audiomentations==0.11.0

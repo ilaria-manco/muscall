@@ -1,0 +1,17 @@
+[
+    {
+        "audio_id": 1,
+        "caption": "First caption that describes this amazing track!",
+        "audio_path": "track_1.npy"
+    },
+    {
+        "audio_id": 2,
+        "caption": "Second caption that describes this amazing track!",
+        "audio_path": "track_2.npy"
+    },
+    {
+        "audio_id": 3,
+        "caption": "Third caption that describes this amazing track!",
+        "audio_path": "track_3.npy"
+    }
+]

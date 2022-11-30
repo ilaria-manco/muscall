@@ -1,0 +1,14 @@
+dataset_config:
+  dataset_name: audiocaption
+  data_dir: ${env.data_root}/datasets/${dataset_config.dataset_name}
+  # Caption configs
+  text:
+    max_seq_length: 77
+    tokenizer: cliptokenizer # one of berttokenizer, cliptokenizer
+  audio:
+    sr: 16000
+    crop_length: 20
+    random_crop: true
+    augment: true
+    p_noise: 0.3
+    p_pitch_shift: 0.4
