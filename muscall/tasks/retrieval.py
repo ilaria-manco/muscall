@@ -11,8 +11,8 @@ from muscall.datasets.audiocaption import AudioCaptionDataset
 def get_muscall_features(model, data_loader, device):
     dataset_size = data_loader.dataset.__len__()
 
-    all_audio_features = torch.zeros(dataset_size, 512).to("cuda")
-    all_text_features = torch.zeros(dataset_size, 512).to("cuda")
+    all_audio_features = torch.zeros(dataset_size, 512).to(device)
+    all_text_features = torch.zeros(dataset_size, 512).to(device)
 
     samples_in_previous_batch = 0
     for i, batch in enumerate(data_loader):
@@ -45,7 +45,7 @@ def compute_sim_score(audio_features, text_features):
     return logits_per_text
 
 
-def get_ranking(score_matrix):
+def get_ranking(score_matrix, device):
     num_queries = score_matrix.size(0)
     num_items = score_matrix.size(1)
 
@@ -56,7 +56,7 @@ def get_ranking(score_matrix):
     for i in range(num_queries):
         gt_indices[i] = torch.full((num_queries, 1), i)
 
-    gt_indices = gt_indices.squeeze(-1).cuda()
+    gt_indices = gt_indices.squeeze(-1).to(device)
 
     return retrieved_indices, gt_indices
 
@@ -86,7 +86,7 @@ def run_retrieval(model, data_loader, device):
     audio_features, text_features = get_muscall_features(
         model, data_loader, device)
     score_matrix = compute_sim_score(audio_features, text_features)
-    retrieved_indices, gt_indices = get_ranking(score_matrix)
+    retrieved_indices, gt_indices = get_ranking(score_matrix, device)
     retrieval_metrics = compute_metrics(retrieved_indices, gt_indices)
 
     return retrieval_metrics
@@ -133,7 +133,7 @@ class Retrieval:
         )
         score_matrix = compute_sim_score(text_features, audio_features)
 
-        retrieved_indices, gt_indices = get_ranking(score_matrix)
+        retrieved_indices, gt_indices = get_ranking(score_matrix, self.device)
         retrieval_metrics = compute_metrics(retrieved_indices, gt_indices)
         print(retrieval_metrics)
 
